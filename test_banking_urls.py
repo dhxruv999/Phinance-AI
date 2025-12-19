@@ -53,7 +53,7 @@ def test_url(url):
         }
 
 def main():
-    csv_file = "Unseen DataSets for testing/Unseen phishing dataset.csv"
+    csv_file = "Unseen DataSets for testing/Unseen-phishing-dataset.csv"
     
     print("=" * 70)
     print("Testing Phishing Detection Model on Unseen Dataset")

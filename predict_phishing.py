@@ -308,10 +308,26 @@ def get_domain_reputation_score(domain):
     financial_keywords = ['bank', 'banking', 'financial', 'finance', 'credit', 'capital', 
                          'union', 'federal', 'state', 'national', 'central', 'reserve']
     
+    # Suspicious words that when combined with banking keywords indicate phishing
+    # These are common in phishing URLs but rare in legitimate banking sites
+    suspicious_phishing_words = ['cashback', 'alert', 'verification', 'verify', 'reward', 
+                                'secure', 'login', 'update', 'claim', 'confirm', 'activate',
+                                'suspended', 'locked', 'expired', 'urgent', 'warning']
+    
     # Check if domain contains banking/financial keywords
     has_banking_keyword = any(keyword in main_domain for keyword in financial_keywords)
+    has_suspicious_word = any(word in main_domain for word in suspicious_phishing_words)
     
-    if has_banking_keyword:
+    # CRITICAL: If domain has banking keyword BUT also suspicious phishing words, it's likely phishing
+    # This catches patterns like "pnb-netbanking-login", "phonepe-cashback", "paytm-cashback-alert"
+    if has_banking_keyword and has_suspicious_word:
+        # Banking keyword + suspicious word = high probability of phishing
+        reputation_score -= 0.40  # Strong penalty
+        # Additional penalty if multiple suspicious words
+        suspicious_count = sum(1 for word in suspicious_phishing_words if word in main_domain)
+        if suspicious_count > 1:
+            reputation_score -= 0.20  # Extra penalty for multiple suspicious words
+    elif has_banking_keyword:
         # Banking domains can be longer (up to 40 chars) and may have 1-2 hyphens
         if len(main_domain) <= 40 and hyphen_count <= 2:
             reputation_score += 0.25  # Increased boost for banking keywords
@@ -325,7 +341,26 @@ def get_domain_reputation_score(domain):
     # Payment/fintech keywords
     payment_keywords = ['pay', 'payment', 'paytm', 'phonepe', 'razorpay', 'stripe', 
                        'paypal', 'wallet', 'upi', 'gateway', 'merchant']
-    if any(keyword in main_domain for keyword in payment_keywords):
+    has_payment_keyword = any(keyword in main_domain for keyword in payment_keywords)
+    
+    # Suspicious TLDs - when combined with banking/payment keywords, very suspicious
+    suspicious_tlds = ['xyz', 'top', 'online', 'site', 'website', 'click', 'link', 'space']
+    
+    # If domain has banking/payment keywords but uses suspicious TLD, it's likely phishing
+    if (has_banking_keyword or has_payment_keyword) and tld in suspicious_tlds:
+        reputation_score -= 0.50  # Strong penalty for banking keyword + suspicious TLD
+    elif tld in suspicious_tlds:
+        # Suspicious TLD without banking keyword is also suspicious
+        reputation_score -= 0.20
+    
+    # Check if payment keyword is combined with suspicious words
+    if has_payment_keyword and has_suspicious_word:
+        # Payment keyword + suspicious word = likely phishing
+        reputation_score -= 0.35
+        suspicious_count = sum(1 for word in suspicious_phishing_words if word in main_domain)
+        if suspicious_count > 1:
+            reputation_score -= 0.15
+    elif has_payment_keyword:
         if len(main_domain) <= 30 and hyphen_count <= 1:
             reputation_score += 0.20
     
@@ -356,10 +391,15 @@ def predict_url(url, model, features, threshold=0.75):
     """
     from urllib.parse import urlparse
     
-    # Extract domain for reputation analysis
+    # Extract domain and query for reputation analysis
     test_url = url if url.startswith(('http://', 'https://')) else 'https://' + url
     parsed = urlparse(test_url)
     domain = parsed.netloc or parsed.path.split('/')[0]
+    query = parsed.query.lower()
+    
+    # Check for suspicious query parameters (common in phishing)
+    suspicious_query_params = ['session=', 'token=', 'verify=', 'confirm=', 'activate=']
+    has_suspicious_query = any(param in query for param in suspicious_query_params)
     
     # Get ML model prediction
     url_features = extract_features_from_url(url)
@@ -378,6 +418,19 @@ def predict_url(url, model, features, threshold=0.75):
     
     # Get domain reputation score (heuristic-based, not hardcoded)
     reputation_score = get_domain_reputation_score(domain)
+    
+    # Additional penalty for suspicious query parameters
+    # Phishing URLs often use query params like ?session=X, ?verify=Y
+    if has_suspicious_query:
+        # If query has suspicious params, lower reputation
+        reputation_score -= 0.15
+        # If combined with banking keywords in domain, even more suspicious
+        domain_lower = domain.lower()
+        if 'bank' in domain_lower or 'pay' in domain_lower or 'netbanking' in domain_lower:
+            reputation_score -= 0.10  # Extra penalty
+    
+    # Ensure reputation score stays in valid range
+    reputation_score = max(0.0, min(1.0, reputation_score))
     
     # Adjust probability based on reputation score
     # If reputation is high (legitimate-looking domain), shift towards legitimate
@@ -441,10 +494,18 @@ def predict_url(url, model, features, threshold=0.75):
             probability[0] = blend_weight * probability[0] + (1 - blend_weight) * target_legitimate
             probability[1] = 1.0 - probability[0]
     elif reputation_score < 0.4:  # Low reputation (suspicious)
-        # Shift probability towards phishing
-        adjustment = (0.4 - reputation_score) * 0.3  # Max 0.12 adjustment
+        # Strong shift towards phishing for low-reputation domains
+        # Lower reputation = stronger shift
+        adjustment = (0.4 - reputation_score) * 0.5  # Max 0.20 adjustment for very low reputation
         probability[0] = max(0.05, probability[0] - adjustment)
         probability[1] = min(0.95, probability[1] + adjustment)
+    elif reputation_score < 0.6:  # Medium reputation - moderate adjustment
+        # For medium reputation, make smaller adjustment
+        if reputation_score < 0.5:
+            # Below 0.5, shift towards phishing
+            adjustment = (0.5 - reputation_score) * 0.2
+            probability[0] = max(0.05, probability[0] - adjustment)
+            probability[1] = min(0.95, probability[1] + adjustment)
     
     # Normalize probabilities
     total = probability[0] + probability[1]
