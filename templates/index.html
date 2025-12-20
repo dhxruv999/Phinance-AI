@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing URL Detection System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ Phishing URL Detection System</h1>
+            <p class="subtitle">AI-Powered URL Security Analysis</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="url-input">Enter URL to Check:</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="url-input" 
+                            placeholder="https://example.com or example.com"
+                            autocomplete="off"
+                        >
+                        <button id="check-btn" class="check-button">
+                            <span class="btn-text">Check URL</span>
+                            <span class="btn-loader" style="display: none;">⏳</span>
+                        </button>
+                    </div>
+                    <div id="url-error" class="error-message" style="display: none;"></div>
+                </div>
+            </div>
+
+            <div id="result-section" class="result-section" style="display: none;">
+                <div id="result-card" class="result-card">
+                    <div class="result-header">
+                        <h2 id="result-title"></h2>
+                        <span id="result-icon" class="result-icon"></span>
+                    </div>
+                    <div class="result-content">
+                        <div class="url-display">
+                            <strong>URL:</strong> <span id="result-url"></span>
+                        </div>
+                        <div class="confidence-bar">
+                            <div class="confidence-label">
+                                <span>Confidence: </span>
+                                <span id="confidence-value"></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="confidence-fill" class="progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="probabilities">
+                            <div class="prob-item">
+                                <span class="prob-label">Legitimate:</span>
+                                <span id="prob-legitimate" class="prob-value"></span>
+                            </div>
+                            <div class="prob-item">
+                                <span class="prob-label">Phishing:</span>
+                                <span id="prob-phishing" class="prob-value"></span>
+                            </div>
+                        </div>
+                        <div class="reputation-info">
+                            <div class="rep-item">
+                                <span class="rep-label">Domain Reputation:</span>
+                                <span id="reputation-level" class="rep-value"></span>
+                            </div>
+                            <div class="rep-item">
+                                <span class="rep-label">Reputation Score:</span>
+                                <span id="reputation-score" class="rep-value"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="model-info" class="model-info">
+                <h3>Model Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Model Type:</span>
+                        <span id="model-type" class="info-value">Loading...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Accuracy:</span>
+                        <span id="model-accuracy" class="info-value">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by Machine Learning | Trained on 483K+ URLs</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
+
