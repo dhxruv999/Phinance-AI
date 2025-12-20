@@ -5,98 +5,164 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phishing URL Detection System</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="background-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
     <div class="container">
-        <header>
-            <h1>🛡️ Phishing URL Detection System</h1>
-            <p class="subtitle">AI-Powered URL Security Analysis</p>
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1 class="header-title">Phishing URL Detection</h1>
+                <p class="header-subtitle">AI-Powered Security Analysis</p>
+            </div>
         </header>
 
-        <main>
-            <div class="input-section">
+        <main class="main-content">
+            <div class="input-card">
+                <div class="input-header">
+                    <h2 class="input-title">Check URL Safety</h2>
+                    <p class="input-description">Enter a URL to analyze its security status using advanced machine learning</p>
+                </div>
+                
                 <div class="input-group">
-                    <label for="url-input">Enter URL to Check:</label>
-                    <div class="input-wrapper">
+                    <div class="input-container">
+                        <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                        </svg>
                         <input 
                             type="text" 
                             id="url-input" 
-                            placeholder="https://example.com or example.com"
+                            class="url-input"
+                            placeholder="https://example.com"
                             autocomplete="off"
                         >
-                        <button id="check-btn" class="check-button">
-                            <span class="btn-text">Check URL</span>
-                            <span class="btn-loader" style="display: none;">⏳</span>
-                        </button>
                     </div>
-                    <div id="url-error" class="error-message" style="display: none;"></div>
+                    <button id="check-btn" class="check-button">
+                        <span class="btn-text">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                            Analyze
+                        </span>
+                        <span class="btn-loader" style="display: none;">
+                            <svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="32" stroke-dashoffset="32">
+                                    <animate attributeName="stroke-dasharray" dur="2s" values="0 32;16 16;0 32;0 32" repeatCount="indefinite"/>
+                                    <animate attributeName="stroke-dashoffset" dur="2s" values="0;-16;-32;-32" repeatCount="indefinite"/>
+                                </circle>
+                            </svg>
+                        </span>
+                    </button>
                 </div>
+                <div id="url-error" class="error-message" style="display: none;"></div>
             </div>
 
             <div id="result-section" class="result-section" style="display: none;">
                 <div id="result-card" class="result-card">
-                    <div class="result-header">
-                        <h2 id="result-title"></h2>
+                    <div class="result-badge">
                         <span id="result-icon" class="result-icon"></span>
+                        <span id="result-title" class="result-title"></span>
                     </div>
+                    
                     <div class="result-content">
-                        <div class="url-display">
-                            <strong>URL:</strong> <span id="result-url"></span>
+                        <div class="url-display-card">
+                            <div class="url-label">Analyzed URL</div>
+                            <div id="result-url" class="url-text"></div>
                         </div>
-                        <div class="confidence-bar">
-                            <div class="confidence-label">
-                                <span>Confidence: </span>
-                                <span id="confidence-value"></span>
+
+                        <div class="confidence-section">
+                            <div class="confidence-header">
+                                <span class="confidence-label">Confidence Level</span>
+                                <span id="confidence-value" class="confidence-value"></span>
                             </div>
-                            <div class="progress-bar">
+                            <div class="progress-container">
                                 <div id="confidence-fill" class="progress-fill"></div>
                             </div>
                         </div>
-                        <div class="probabilities">
-                            <div class="prob-item">
-                                <span class="prob-label">Legitimate:</span>
-                                <span id="prob-legitimate" class="prob-value"></span>
+
+                        <div class="stats-grid">
+                            <div class="stat-card stat-legitimate">
+                                <div class="stat-icon">✓</div>
+                                <div class="stat-content">
+                                    <div class="stat-label">Legitimate</div>
+                                    <div id="prob-legitimate" class="stat-value"></div>
+                                </div>
                             </div>
-                            <div class="prob-item">
-                                <span class="prob-label">Phishing:</span>
-                                <span id="prob-phishing" class="prob-value"></span>
+                            <div class="stat-card stat-phishing">
+                                <div class="stat-icon">⚠</div>
+                                <div class="stat-content">
+                                    <div class="stat-label">Phishing</div>
+                                    <div id="prob-phishing" class="stat-value"></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="reputation-info">
-                            <div class="rep-item">
-                                <span class="rep-label">Domain Reputation:</span>
-                                <span id="reputation-level" class="rep-value"></span>
+
+                        <div class="reputation-section">
+                            <div class="reputation-card">
+                                <div class="rep-icon">⭐</div>
+                                <div class="rep-content">
+                                    <div class="rep-label">Domain Reputation</div>
+                                    <div id="reputation-level" class="rep-value"></div>
+                                </div>
                             </div>
-                            <div class="rep-item">
-                                <span class="rep-label">Reputation Score:</span>
-                                <span id="reputation-score" class="rep-value"></span>
+                            <div class="reputation-card">
+                                <div class="rep-icon">📊</div>
+                                <div class="rep-content">
+                                    <div class="rep-label">Reputation Score</div>
+                                    <div id="reputation-score" class="rep-value"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="model-info" class="model-info">
-                <h3>Model Information</h3>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <span class="info-label">Model Type:</span>
-                        <span id="model-type" class="info-value">Loading...</span>
+            <div id="model-info" class="model-info-card">
+                <div class="model-header">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z"></path>
+                        <path d="M2 17L12 22L22 17"></path>
+                        <path d="M2 12L12 17L22 12"></path>
+                    </svg>
+                    <h3 class="model-title">Model Information</h3>
+                </div>
+                <div class="model-stats">
+                    <div class="model-stat">
+                        <span class="model-label">Model Type</span>
+                        <span id="model-type" class="model-value">Loading...</span>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">Accuracy:</span>
-                        <span id="model-accuracy" class="info-value">Loading...</span>
+                    <div class="model-stat">
+                        <span class="model-label">Accuracy</span>
+                        <span id="model-accuracy" class="model-value">Loading...</span>
                     </div>
                 </div>
             </div>
         </main>
 
-        <footer>
-            <p>Powered by Machine Learning | Trained on 483K+ URLs</p>
+        <footer class="footer">
+            <p class="footer-text">
+                <span>Powered by Machine Learning</span>
+                <span class="footer-separator">•</span>
+                <span>Trained on 483K+ URLs</span>
+            </p>
         </footer>
     </div>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
-

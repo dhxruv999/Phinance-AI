@@ -163,11 +163,11 @@ function displayResults(data) {
     
     // Set result title and icon
     if (isPhishing) {
-        resultTitle.textContent = '⚠️ PHISHING DETECTED';
-        resultIcon.textContent = '🚨';
+        resultTitle.textContent = 'PHISHING DETECTED';
+        resultIcon.textContent = '⚠️';
         resultCard.className = 'result-card phishing';
     } else {
-        resultTitle.textContent = '✅ LEGITIMATE URL';
+        resultTitle.textContent = 'LEGITIMATE URL';
         resultIcon.textContent = '✓';
         resultCard.className = 'result-card legitimate';
     }
