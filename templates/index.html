@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phishing URL Detection System</title>
+    <title>Phinance AI - Phishing URL Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+    {% include 'navbar.html' %}
+
     <div class="background-animation">
         <div class="gradient-orb orb-1"></div>
         <div class="gradient-orb orb-2"></div>
@@ -20,14 +23,19 @@
         <header class="header">
             <div class="header-content">
                 <div class="logo-icon">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3z" fill="url(#headerLogoGradient)" stroke="url(#headerLogoGradient)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <text x="12" y="12" font-family="Arial, sans-serif" font-size="14" font-weight="900" fill="#000000" text-anchor="middle" dominant-baseline="central">$</text>
+                        <defs>
+                            <linearGradient id="headerLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
                     </svg>
                 </div>
-                <h1 class="header-title">Phishing URL Detection</h1>
-                <p class="header-subtitle">AI-Powered Security Analysis</p>
+                <h1 class="header-title">Phinance AI</h1>
+                <p class="header-subtitle">AI-Powered Phishing Detection to Protect Your Banking</p>
             </div>
         </header>
 
@@ -35,7 +43,7 @@
             <div class="input-card">
                 <div class="input-header">
                     <h2 class="input-title">Check URL Safety</h2>
-                    <p class="input-description">Enter a URL to analyze its security status using advanced machine learning</p>
+                    <p class="input-description">Verify if a banking website URL is safe before entering your credentials</p>
                 </div>
                 
                 <div class="input-group">
@@ -147,8 +155,12 @@
                         <span id="model-type" class="model-value">Loading...</span>
                     </div>
                     <div class="model-stat">
-                        <span class="model-label">Accuracy</span>
-                        <span id="model-accuracy" class="model-value">Loading...</span>
+                        <span class="model-label">Banking URLs Accuracy</span>
+                        <span id="banking-accuracy" class="model-value">97.58%</span>
+                    </div>
+                    <div class="model-stat">
+                        <span class="model-label">Overall Model Accuracy</span>
+                        <span id="model-accuracy" class="model-value">95.88%</span>
                     </div>
                 </div>
             </div>
@@ -156,10 +168,13 @@
 
         <footer class="footer">
             <p class="footer-text">
+                <span>Phinance AI</span>
+                <span class="footer-separator">•</span>
                 <span>Powered by Machine Learning</span>
                 <span class="footer-separator">•</span>
                 <span>Trained on 483K+ URLs</span>
             </p>
+            <p class="footer-copyright">© 2025 Dhruv Maheshwari. All rights reserved.</p>
         </footer>
     </div>
 

@@ -27,8 +27,14 @@ except Exception as e:
 
 
 @app.route('/')
+def landing():
+    """Serve the landing page"""
+    return render_template('landing.html')
+
+
+@app.route('/analyze')
 def index():
-    """Serve the main page"""
+    """Serve the main analysis page"""
     return render_template('index.html')
 
 

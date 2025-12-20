@@ -3,91 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SecureBank - Banking Phishing Detection</title>
+    <title>Phinance AI - Banking Phishing Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="url(#logoGradient)" stroke="url(#logoGradient)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M2 17L12 22L22 17" fill="url(#logoGradient)" stroke="url(#logoGradient)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M2 12L12 17L22 12" fill="url(#logoGradient)" stroke="url(#logoGradient)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <defs>
-                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                </svg>
-                <span class="logo-text">SecureBank</span>
-            </div>
-            <div class="nav-links">
-                <a href="#how-it-works" class="nav-link">How it works</a>
-                <a href="#solutions" class="nav-link">Solutions</a>
-                <a href="#about" class="nav-link">About us</a>
-                <a href="/analyze" class="nav-button">Start</a>
-            </div>
-        </div>
-    </nav>
+    {% include 'navbar.html' %}
 
     <main class="hero-section">
         <div class="hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">Stop phishing attacks before they strike</h1>
+                <h1 class="hero-title">AI-Driven Defense for Digital Finance</h1>
                 <p class="hero-description">
-                    Banking institutions face constant threats from sophisticated phishing schemes. 
-                    Our AI-powered detection system identifies malicious URLs in real time, protecting 
-                    your customers and your reputation.
+                    In an era of evolving cyber threats, phishing attacks remain one of the greatest risks to digital banking users. 
+                    Phinance AI intelligently analyzes URLs in real time, preventing fraudulent access and preserving the integrity 
+                    of financial and personal data.
                 </p>
                 <div class="hero-buttons">
                     <a href="/analyze" class="btn btn-primary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3z"></path>
+                            <path d="M9 12l2 2 4-4"></path>
                         </svg>
-                        Detect
+                        Begin Analysis
                     </a>
                     <a href="#how-it-works" class="btn btn-secondary">Learn more</a>
-                </div>
-                <div class="stats-banner">
-                    <div class="stat-item">
-                        <div class="stat-value">97%</div>
-                        <div class="stat-label">Banking URL Accuracy</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">95.88%</div>
-                        <div class="stat-label">Overall AI Model Accuracy</div>
-                    </div>
                 </div>
             </div>
             <div class="hero-image">
                 <div class="image-container">
-                    <div class="banking-icon">
-                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 21h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M5 21V7l8-4v14" stroke="currentColor" stroke-width="2"/>
-                            <path d="M19 21V11l-6-4" stroke="currentColor" stroke-width="2"/>
-                            <path d="M9 9v0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M9 12v0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M9 15v0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M9 18v0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <div class="shield-overlay">
-                        <svg width="200" height="200" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3z" stroke="url(#shieldGradient)" stroke-width="1.5" fill="none"/>
-                            <path d="M9 12l2 2 4-4" stroke="url(#shieldGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <defs>
-                                <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.6" />
-                                    <stop offset="100%" style="stop-color:#f97316;stop-opacity:0.6" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
+                    <div class="image-placeholder">
+                        <img src="{{ url_for('static', filename='images/cybersecurity-illustration.png') }}" alt="Cybersecurity Illustration" class="hero-illustration">
                     </div>
                 </div>
             </div>
@@ -120,10 +69,193 @@
         </div>
     </section>
 
+    <section id="about" class="about-section">
+        <div class="about-container">
+            <div class="about-content">
+                <h2 class="about-title">Advanced Phishing Detection Technology</h2>
+                <p class="about-text">
+                    Our cutting-edge machine learning model has been trained on over 483,000 URLs, 
+                    specializing in banking and financial phishing detection. The system analyzes 41+ URL 
+                    features including domain age, SSL certificates, suspicious patterns, and behavioral 
+                    indicators to provide real-time threat assessment and protect you from fraud.
+                </p>
+                <div class="read-more-content" id="read-more-content" style="display: none;">
+                    <p class="about-text">
+                        The model leverages advanced feature extraction techniques to identify subtle 
+                        patterns that distinguish legitimate banking websites from phishing attempts. 
+                        Our specialized focus on financial security ensures higher accuracy rates for 
+                        banking-related URLs, with a 97.58% accuracy rate specifically for banking domains 
+                        and 95.88% overall model accuracy.
+                    </p>
+                    <p class="about-text">
+                        Key features include real-time analysis, confidence scoring, reputation assessment, 
+                        and detailed probability breakdowns. The system continuously learns and adapts to 
+                        emerging phishing techniques, ensuring you stay protected against evolving threats 
+                        and keep your financial information secure.
+                    </p>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Real-time URL analysis</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>41+ feature extraction</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Banking-focused detection</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>97.58% banking URLs accuracy</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>95.88% overall model accuracy</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Instant threat assessment</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="read-more-btn" id="read-more-btn">
+                    <span class="read-more-text">Read more</span>
+                    <svg class="read-more-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
     <footer class="footer">
         <div class="footer-container">
-            <p class="footer-text">Powered by Machine Learning | Trained on 483K+ URLs | Specialized in Banking Security</p>
+            <p class="footer-text">Phinance AI | Powered by Machine Learning | Trained on 483K+ URLs | Protecting Bank Users from Phishing</p>
+            <p class="footer-copyright">© 2025 Dhruv Maheshwari. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Read more functionality
+            const readMoreBtn = document.getElementById('read-more-btn');
+            const readMoreContent = document.getElementById('read-more-content');
+            
+            if (readMoreBtn && readMoreContent) {
+                const readMoreText = readMoreBtn.querySelector('.read-more-text');
+                const readMoreIcon = readMoreBtn.querySelector('.read-more-icon');
+
+                readMoreBtn.addEventListener('click', function() {
+                    if (readMoreContent.style.display === 'none' || readMoreContent.style.display === '') {
+                        readMoreContent.style.display = 'block';
+                        if (readMoreText) readMoreText.textContent = 'Read less';
+                        if (readMoreIcon) readMoreIcon.style.transform = 'rotate(180deg)';
+                        readMoreContent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    } else {
+                        readMoreContent.style.display = 'none';
+                        if (readMoreText) readMoreText.textContent = 'Read more';
+                        if (readMoreIcon) readMoreIcon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            }
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (href !== '#' && href.length > 1) {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe sections for animation
+            document.querySelectorAll('.step, .about-content, .section-header').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+
+            // Logo hover animation
+            const logo = document.querySelector('.logo');
+            if (logo) {
+                logo.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                });
+                logo.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            }
+
+            // Button ripple effect
+            document.querySelectorAll('.btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple');
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+
+            // Parallax effect on hero image
+            const heroImage = document.querySelector('.hero-image');
+            if (heroImage) {
+                window.addEventListener('scroll', function() {
+                    const scrolled = window.pageYOffset;
+                    const rate = scrolled * 0.3;
+                    heroImage.style.transform = `translateY(${rate}px)`;
+                });
+            }
+        });
+    </script>
 </body>
 </html>
