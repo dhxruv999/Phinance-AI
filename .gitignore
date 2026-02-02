@@ -23,16 +23,6 @@ build/
 dist/
 *.egg-info/
 
-# Wheels
-wheels/
-
 # Misc
 *.log
 *.tmp
-
-# Docker
-*.tar.gz
-# Local Docker project files
-Dockerfile
-docker-compose*.yml
-.dockerignore
