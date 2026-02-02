@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.ipynb
+.env
+venv/
+env/
+.venv/
+Model Training DataSets/
+Unseen DataSets for testing/
+phishing-links-ACTIVE.txt
+*.csv
+*.xlsx
+*.tar.gz
+*.zip
+.git
+.gitignore
+README.md
+.DS_Store
+
