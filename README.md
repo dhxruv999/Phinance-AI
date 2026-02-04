@@ -24,7 +24,6 @@ A high-accuracy machine learning model trained to detect phishing and spam URLs 
 ## Datasets Used
 
 1. **Mendeley Dataset** (247,950 samples)
-
    - Source: https://data.mendeley.com/datasets/6tm2d6sz7p/1
    - Features: 41 URL-based features (length, special characters, entropy, domain features, etc.)
 
@@ -81,7 +80,7 @@ This will:
 - Standardize label conventions
 - Train multiple models (Random Forest, Gradient Boosting, AdaBoost, XGBoost)
 - Select the best performing model based on accuracy and F1-score
-- Save the model as `phishing_detection_model.pkl`
+- Save the model as `models/phishing_detection_model.pkl` (or set `MODEL_DIR` env var to a custom path)
 
 ### Making Predictions
 
@@ -101,9 +100,9 @@ python predict_phishing.py 192.168.1.1
 
 ## Model Files
 
-- `phishing_detection_model.pkl` - Trained model (best performing algorithm)
-- `model_features.pkl` - List of feature names used by the model
-- `model_info.json` - Model metadata and performance metrics
+- `models/phishing_detection_model.pkl` - Trained model (best performing algorithm). Location configurable via `MODEL_DIR` env var.
+- `models/model_features.pkl` - List of feature names used by the model. Location configurable via `MODEL_DIR` env var.
+- `model_info.json` - Model metadata and performance metrics (also saved to `models/model_info.json` when training).
 
 ## Top Features
 

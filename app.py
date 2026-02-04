@@ -198,7 +198,7 @@ def health():
 if __name__ == '__main__':
     if model is None:
         print("⚠️  Warning: Model not loaded. Please ensure model files exist.")
-        print("   Run: python train_model.py")
+        print("   Run: MODEL_DIR=models python train_model.py (or set MODEL_DIR to your models path)")
 
     print("\n" + "="*60)
     print("Phishing Detection API Server")
@@ -207,4 +207,3 @@ if __name__ == '__main__':
     print("Press Ctrl+C to stop\n")
 
     app.run(debug=True, host='0.0.0.0', port=5001)
-

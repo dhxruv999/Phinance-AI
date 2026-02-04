@@ -11,6 +11,7 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier,
 from sklearn.metrics import classification_report, accuracy_score, roc_auc_score, precision_score, recall_score, f1_score
 import joblib
 import json
+import os
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -30,7 +31,8 @@ print("=" * 70)
 # Step 1: Load datasets
 print("\n[1/6] Loading datasets...")
 mendeley_df = pd.read_csv('Model Training DataSets/Mendeley Dataset.csv')
-uci_df = pd.read_csv('Model Training DataSets/UCI PhiUSIIL_Phishing_URL UCI DataSet.csv')
+uci_df = pd.read_csv(
+    'Model Training DataSets/UCI PhiUSIIL_Phishing_URL UCI DataSet.csv')
 
 print(f"Mendeley dataset shape: {mendeley_df.shape}")
 print(f"UCI dataset shape: {uci_df.shape}")
@@ -59,16 +61,17 @@ mendeley_y = mendeley_df['label'].copy()
 uci_X = pd.DataFrame()
 for feature in mendeley_features:
     found = False
-    uci_numeric_cols = uci_df.select_dtypes(include=[np.number]).columns.tolist()
+    uci_numeric_cols = uci_df.select_dtypes(
+        include=[np.number]).columns.tolist()
     if 'label' in uci_numeric_cols:
         uci_numeric_cols.remove('label')
-    
+
     for uf in uci_numeric_cols:
         if feature.lower() == uf.lower() or feature.lower().replace('_', '') == uf.lower().replace('_', ''):
             uci_X[feature] = uci_df[uf]
             found = True
             break
-    
+
     # Try common mappings
     if not found:
         if feature == 'url_length' and 'URLLength' in uci_df.columns:
@@ -89,7 +92,7 @@ for feature in mendeley_features:
         elif feature == 'number_of_digits_in_url' and 'NoOfDegitsInURL' in uci_df.columns:
             uci_X[feature] = uci_df['NoOfDegitsInURL']
             found = True
-    
+
     if not found:
         uci_X[feature] = 0
 
@@ -131,7 +134,8 @@ rf_model = RandomForestClassifier(
     max_features='sqrt',
     random_state=42,
     n_jobs=-1,
-    class_weight={0: 1.0, 1: 0.85}  # Slightly favor legitimate to reduce false positives
+    # Slightly favor legitimate to reduce false positives
+    class_weight={0: 1.0, 1: 0.85}
 )
 rf_model.fit(X_train, y_train)
 rf_pred = rf_model.predict(X_test)
@@ -271,7 +275,8 @@ print("=" * 70)
 
 # Select best model based on precision (reduce false positives), then accuracy and F1-score
 # Prioritize precision to avoid flagging legitimate sites as phishing
-best_model_name = max(results.keys(), key=lambda k: (results[k]['precision'], results[k]['accuracy'], results[k]['f1']))
+best_model_name = max(results.keys(), key=lambda k: (
+    results[k]['precision'], results[k]['accuracy'], results[k]['f1']))
 best_model = results[best_model_name]['model']
 best_results = results[best_model_name]
 
@@ -280,10 +285,12 @@ print(f"{'Model':<20} {'Accuracy':<12} {'Precision':<12} {'Recall':<12} {'F1-Sco
 print("-" * 70)
 for name, metrics in results.items():
     marker = " <-- BEST" if name == best_model_name else ""
-    print(f"{name:<20} {metrics['accuracy']:<12.4f} {metrics['precision']:<12.4f} {metrics['recall']:<12.4f} {metrics['f1']:<12.4f}{marker}")
+    print(
+        f"{name:<20} {metrics['accuracy']:<12.4f} {metrics['precision']:<12.4f} {metrics['recall']:<12.4f} {metrics['f1']:<12.4f}{marker}")
 
 print(f"\n✓ Best Model: {best_model_name}")
-print(f"  Accuracy: {best_results['accuracy']:.4f} ({best_results['accuracy']*100:.2f}%)")
+print(
+    f"  Accuracy: {best_results['accuracy']:.4f} ({best_results['accuracy']*100:.2f}%)")
 print(f"  ROC-AUC: {best_results['roc_auc']:.4f}")
 print(f"  Precision: {best_results['precision']:.4f}")
 print(f"  Recall: {best_results['recall']:.4f}")
@@ -292,14 +299,19 @@ print(f"  F1-Score: {best_results['f1']:.4f}")
 # Detailed classification report
 print("\nDetailed Classification Report:")
 best_pred = best_model.predict(X_test)
-print(classification_report(y_test, best_pred, target_names=['Legitimate', 'Phishing']))
+print(classification_report(y_test, best_pred,
+      target_names=['Legitimate', 'Phishing']))
 
 # Save the best model
 print("\n" + "=" * 70)
 print("Saving best model...")
 
-joblib.dump(best_model, 'phishing_detection_model.pkl')
-joblib.dump(mendeley_features, 'model_features.pkl')
+model_dir = os.environ.get('MODEL_DIR', 'models')
+os.makedirs(model_dir, exist_ok=True)
+
+joblib.dump(best_model, os.path.join(
+    model_dir, 'phishing_detection_model.pkl'))
+joblib.dump(mendeley_features, os.path.join(model_dir, 'model_features.pkl'))
 
 model_info = {
     'model_type': best_model_name,
@@ -318,10 +330,15 @@ model_info = {
 
 with open('model_info.json', 'w') as f:
     json.dump(model_info, f, indent=2)
+# Also save a copy of model_info inside the model directory for portability
+with open(os.path.join(model_dir, 'model_info.json'), 'w') as f:
+    json.dump(model_info, f, indent=2)
 
-print("✓ Model saved as 'phishing_detection_model.pkl'")
-print("✓ Features saved as 'model_features.pkl'")
-print("✓ Model info saved as 'model_info.json'")
+print(
+    f"✓ Model saved as '{os.path.join(model_dir, 'phishing_detection_model.pkl')}'")
+print(f"✓ Features saved as '{os.path.join(model_dir, 'model_features.pkl')}'")
+print(
+    f"✓ Model info saved to root 'model_info.json' and '{os.path.join(model_dir, 'model_info.json')}'")
 
 # Feature importance
 print("\n" + "=" * 70)
@@ -336,4 +353,3 @@ if hasattr(best_model, 'feature_importances_'):
 print("\n" + "=" * 70)
 print("Training completed successfully!")
 print("=" * 70)
-

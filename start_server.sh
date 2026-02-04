@@ -20,10 +20,13 @@ python3 -c "import flask" 2>/dev/null || {
     pip3 install -r requirements.txt
 }
 
-# Check if model files exist
-if [ ! -f "phishing_detection_model.pkl" ]; then
-    echo "⚠️  Warning: Model file not found!"
-    echo "   Please run: python3 train_model.py"
+# Check if model files exist (MODEL_DIR defaults to 'models' if not set)
+MODEL_DIR="${MODEL_DIR:-models}"
+
+# Warn if model file not found in MODEL_DIR
+if [ ! -f "$MODEL_DIR/phishing_detection_model.pkl" ]; then
+    echo "⚠️  Warning: Model file not found in $MODEL_DIR!"
+    echo "   Please run: MODEL_DIR=$MODEL_DIR python3 train_model.py"
     echo ""
 fi
 
