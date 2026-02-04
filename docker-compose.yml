@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  phinance-ai:
+    image: dhxruv/phinance-ai:latest
+    container_name: phinance-ai
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./models:/app/models
+    environment:
+      - Model_DIR=/app/models
+    restart: unless-stopped
