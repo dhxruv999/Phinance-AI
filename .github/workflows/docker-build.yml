@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build, Push & Deploy
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +22,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Docker image
+      - name: Build & Push image
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -31,3 +31,14 @@ jobs:
           tags: |
             dhxruv/phinance-ai:v1.1
             dhxruv/phinance-ai:latest
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd phinance-ai
+            docker-compose pull
+            docker-compose up -d
