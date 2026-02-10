@@ -60,4 +60,8 @@ jobs:
             docker-compose up -d
 
             sleep 25
+            curl http://localhost:5001/ || true
+            curl http://localhost:5001/analyze || true
+
             curl --fail http://localhost:5001/api/health
+            
