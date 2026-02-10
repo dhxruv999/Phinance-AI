@@ -4,6 +4,7 @@ Flask Backend API for Phishing URL Detection System
 
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
+from flask_compress import Compress
 import sys
 import traceback
 
@@ -12,6 +13,11 @@ from predict_phishing import load_model, predict_url
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend requests
+Compress(app)  # Enable gzip compression for responses
+
+# Configure caching for static files (CSS, JS, images)
+# Cache for 1 year (31536000 seconds)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000
 
 # Load model once at startup
 print("Loading ML model...")
@@ -212,4 +218,4 @@ if __name__ == '__main__':
     print("\nStarting server on http://localhost:5001")
     print("Press Ctrl+C to stop\n")
 
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run(debug=False, host='0.0.0.0', port=5001)
