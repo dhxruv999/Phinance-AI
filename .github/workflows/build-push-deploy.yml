@@ -46,10 +46,13 @@ jobs:
             cd phinance-ai
 
             docker-compose down
+
+            docker image prune -af || true
+
             docker-compose pull
             docker-compose up -d
 
             sleep 25
             curl --fail http://localhost:5001/api/health
 
-            docker image prune -f || true
+            
