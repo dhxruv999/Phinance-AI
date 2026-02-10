@@ -207,6 +207,16 @@ def health():
     }), 200
 
 
+@app.before_first_request
+def warmup_templates():
+    try:
+        with app.app_context():
+            render_template("landing.html")
+            render_template("index.html")
+    except Exception as e:
+        print("Template warmup failed:", e)
+
+
 if __name__ == '__main__':
     if model is None:
         print("⚠️  Warning: Model not loaded. Please ensure model files exist.")
