@@ -1,4 +1,4 @@
-name: Build, Push & Deploy
+name: Build, Push & Deploy (Phinance-AI)
 
 on:
   push:
@@ -31,6 +31,8 @@ jobs:
           tags: |
             dhxruv/phinance-ai:v1.2
             dhxruv/phinance-ai:latest
+          cache-from: type=registry,ref=dhxruv/phinance-ai:latest
+          cache-to: type=inline
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.0
@@ -39,6 +41,15 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
+            set -e
+
             cd phinance-ai
+
+            docker-compose down
             docker-compose pull
             docker-compose up -d
+
+            sleep 25
+            curl --fail http://localhost:5001/api/health
+
+            docker image prune -f || true

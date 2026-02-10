@@ -188,11 +188,17 @@ def model_info_endpoint():
 
 @app.route('/api/health', methods=['GET'])
 def health():
-    """Health check endpoint"""
+    if model is None:
+        return jsonify({
+            'status': 'unhealthy',
+            'model_loaded': False,
+            'reason': 'Model not loaded'
+        }), 500
+
     return jsonify({
         'status': 'healthy',
-        'model_loaded': model is not None
-    })
+        'model_loaded': True
+    }), 200
 
 
 if __name__ == '__main__':
