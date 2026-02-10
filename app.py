@@ -208,21 +208,10 @@ def health():
     }), 200
 
 
-def warmup_templates():
-    try:
-        with app.app_context():
-            render_template("landing.html")
-            render_template("index.html")
-        print("✓ Templates warmed up")
-    except Exception as e:
-        print("⚠️ Template warmup failed:", e)
-
-
 if __name__ == '__main__':
     if model is None:
         print("⚠️  Warning: Model not loaded. Please ensure model files exist.")
         print("   Run: MODEL_DIR=models python train_model.py (or set MODEL_DIR to your models path)")
-    warmup_templates()
     print("\n" + "="*60)
     print("Phishing Detection API Server")
     print("="*60)
