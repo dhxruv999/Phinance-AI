@@ -6,7 +6,8 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  build-and-push:
+    name: Build & Push Docker Image
     runs-on: ubuntu-latest
 
     steps:
@@ -29,12 +30,18 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            dhxruv/phinance-ai:v1.3
+            dhxruv/phinance-ai:v2.0
             dhxruv/phinance-ai:latest
           cache-from: type=registry,ref=dhxruv/phinance-ai:latest
           cache-to: type=inline
 
-      - name: Deploy to EC2
+  deploy-ec2:
+    name: Deploy to EC2
+    needs: build-and-push   
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH & Deploy
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -54,5 +61,3 @@ jobs:
 
             sleep 25
             curl --fail http://localhost:5001/api/health
-
-            
