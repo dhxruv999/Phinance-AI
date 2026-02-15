@@ -1389,7 +1389,22 @@ a.nav-button {
 }
 
 @media (max-width: 480px) {
+    .logo {
+        gap: 8px;
+    }
+
+    .logo svg {
+        width: 32px;
+        height: 32px;
+    }
+
     .logo-text {
+        display: block;
+        font-size: 1rem;
+        line-height: 1.1;
+    }
+
+    .logo-tagline {
         display: none;
     }
 
