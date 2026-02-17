@@ -2,6 +2,8 @@
 Flask Backend API for Phishing URL Detection System
 """
 
+import os
+
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from flask_compress import Compress
@@ -12,7 +14,7 @@ import traceback
 from predict_phishing import load_model, predict_url
 
 app = Flask(__name__)
-app.config["SERVER_NAME"] = "localhost:5001"
+app.config["SERVER_NAME"] = os.getenv("SERVER_NAME", "localhost:5001")
 CORS(app)  # Enable CORS for frontend requests
 Compress(app)  # Enable gzip compression for responses
 
@@ -215,7 +217,9 @@ if __name__ == '__main__':
     print("\n" + "="*60)
     print("Phishing Detection API Server")
     print("="*60)
-    print("\nStarting server on http://localhost:5001")
+    app_host = os.getenv("APP_HOST", "0.0.0.0")
+    app_port = int(os.getenv("APP_PORT", "5001"))
+    print(f"\nStarting server on http://localhost:{app_port}")
     print("Press Ctrl+C to stop\n")
 
-    app.run(debug=False, host='0.0.0.0', port=5001)
+    app.run(debug=False, host=app_host, port=app_port)

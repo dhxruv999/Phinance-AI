@@ -12,6 +12,15 @@ COPY predict_phishing.py .
 COPY templates/ ./templates/
 COPY static/ ./static/
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends nginx \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh \
+    && rm -f /etc/nginx/sites-enabled/default
+
 EXPOSE 5001
 
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:5001", "--workers", "1", "--timeout", "180"]
+CMD ["/usr/local/bin/docker-entrypoint.sh"]

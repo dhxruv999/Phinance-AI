@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   phinance-ai:
-    image: dhxruv/phinance-ai:latest
+    image: dhxruv/phinance-ai:v2.2
     container_name: phinance-ai
     ports:
       - "5001:5001"
