@@ -30,7 +30,7 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            dhxruv/phinance-ai:v2.1
+            dhxruv/phinance-ai:v2.2
             dhxruv/phinance-ai:latest
           cache-from: type=registry,ref=dhxruv/phinance-ai:latest
           cache-to: type=inline
