@@ -6,7 +6,7 @@ A high-accuracy machine learning model trained to detect phishing and spam URLs 
 
 - **Best Model**: Gradient Boosting Classifier (selected from multiple algorithms)
 - **Accuracy**: 94.97% (improved from 87.23%)
-- **ROC-AUC Score**: 97.73%
+- **ROC-AUC Score**: 97.73%  
 - **Precision**: 97.20%
 - **Recall**: 91.60%
 - **F1-Score**: 94.32%
