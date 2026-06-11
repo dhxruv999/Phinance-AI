@@ -1,154 +1,303 @@
-# Phishing URL Detection System
+<div align="center">
 
-A high-accuracy machine learning model trained to detect phishing and spam URLs by combining two comprehensive datasets.
+# 🛡️ Phishing URL Detection System
 
-## Model Performance
+<img src="screenshots/banner.png" alt="Project Banner" width="100%">
 
-- **Best Model**: Gradient Boosting Classifier (selected from multiple algorithms)  
-- **Accuracy**: 94.97% (improved from 87.23%)
-- **ROC-AUC Score**: 97.73%  
-- **Precision**: 97.20%
-- **Recall**: 91.60%
-- **F1-Score**: 94.32%
-- **Training Samples**: 386,996
-- **Test Samples**: 96,749
-- **Total Features**: 41 URL-based features
+### Machine Learning Powered Phishing & Spam URL Detection
 
-### Classification Performance  
+Detect malicious URLs using a high-performance Gradient Boosting model trained on nearly half a million samples.
 
-| Class      | Precision | Recall | F1-Score |
-| ---------- | --------- | ------ | -------- |
-| Legitimate | 0.93      | 0.98   | 0.95     |
-| Phishing   | 0.97      | 0.92   | 0.94     |
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Gradient%20Boosting-green)
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
+![GitHub Actions](https://img.shields.io/badge/CI/CD-GitHub%20Actions-black)
+![AWS](https://img.shields.io/badge/Cloud-AWS%20EC2-orange)
+![Accuracy](https://img.shields.io/badge/Accuracy-94.97%25-success)
 
-## Datasets Used
+</div>
 
-1. **Mendeley Dataset** (247,950 samples)
-   - Source: https://data.mendeley.com/datasets/6tm2d6sz7p/1
-   - Features: 41 URL-based features (length, special characters, entropy, domain features, etc.)
+---
 
-2. **UCI PhiUSIIL Phishing URL Dataset** (235,795 samples)
-   - Source: https://archive.ics.uci.edu/dataset/327/phishing+websites
-   - Features: URL characteristics mapped to Mendeley feature set
+## 📌 Overview
 
-**Combined Dataset**: 483,745 total samples with 41 URL-based features
+Phishing attacks remain one of the most common cybersecurity threats. This project uses Machine Learning and URL-based feature engineering to identify phishing websites without requiring webpage content analysis.
 
-## Installation
+The system analyzes URL structure, domain characteristics, entropy, special characters, subdomains, and other indicators to classify URLs as:
 
-1. Install required packages:
+✅ Legitimate
+
+🚨 Phishing
+
+The model is trained on a combined dataset of **483,745 URLs** and achieves nearly **95% classification accuracy**.
+
+---
+
+## 🖼️ Application Screenshots
+
+### Home Page
+
+<img src="screenshots/home.png" width="100%">
+
+---
+
+### URL Analysis Interface
+
+<img src="screenshots/analyze.png" width="100%">
+
+---
+
+### Legitimate URL Detection
+
+<img src="screenshots/legitimate.png" width="100%">
+
+---
+
+### Phishing URL Detection
+
+<img src="screenshots/phishing.png" width="100%">
+
+---
+
+## 🚀 Features
+
+- Real-time URL phishing detection
+- Supports URLs, domains, and IP addresses
+- Advanced URL feature extraction
+- High-performance Gradient Boosting model
+- Dockerized deployment
+- CI/CD using GitHub Actions
+- AWS EC2 deployment ready
+- Lightweight inference
+- No webpage scraping required
+
+---
+
+## 🏗️ Architecture
+
+```text
+User URL
+    │
+    ▼
+Feature Extraction
+(41 URL Features)
+    │
+    ▼
+Gradient Boosting Model
+    │
+    ▼
+Prediction Engine
+    │
+    ├── Legitimate
+    └── Phishing
+```
+
+---
+
+## ⚙️ DevOps & Deployment
+
+This project follows modern DevOps practices.
+
+### Tech Stack
+
+| Category | Technology |
+|-----------|------------|
+| Machine Learning | Scikit-Learn |
+| Backend | Python |
+| Containerization | Docker |
+| CI/CD | GitHub Actions |
+| Cloud Hosting | AWS EC2 |
+| Version Control | Git & GitHub |
+| Model Serialization | Pickle |
+
+### Deployment Pipeline
+
+```text
+Developer
+    │
+    ▼
+GitHub Repository
+    │
+    ▼
+GitHub Actions
+(Testing + Build)
+    │
+    ▼
+Docker Image
+    │
+    ▼
+AWS EC2 Deployment
+    │
+    ▼
+Production Environment
+```
+
+---
+
+## 📊 Model Performance
+
+### Best Model
+
+**Gradient Boosting Classifier**
+
+| Metric | Score |
+|----------|----------|
+| Accuracy | 94.97% |
+| ROC-AUC | 97.73% |
+| Precision | 97.20% |
+| Recall | 91.60% |
+| F1 Score | 94.32% |
+
+### Classification Report
+
+| Class | Precision | Recall | F1 |
+|---------|---------|---------|---------|
+| Legitimate | 0.93 | 0.98 | 0.95 |
+| Phishing | 0.97 | 0.92 | 0.94 |
+
+---
+
+## 📈 Dataset Information
+
+### Dataset 1
+
+**Mendeley Phishing URL Dataset**
+
+- 247,950 Samples
+- 41 URL-based Features
+
+### Dataset 2
+
+**UCI PhiUSIIL Phishing URL Dataset**
+
+- 235,795 Samples
+- URL Characteristics
+
+### Combined Dataset
+
+| Metric | Value |
+|---------|---------|
+| Total Samples | 483,745 |
+| Training Samples | 386,996 |
+| Test Samples | 96,749 |
+| Features | 41 |
+
+---
+
+## 🔍 Top Features
+
+The most influential features identified by the model:
+
+1. URL Length
+2. Number of Digits
+3. Domain Length
+4. Average Subdomain Length
+5. Number of Subdomains
+6. Special Character Count
+7. Domain Entropy
+8. Slash Count
+9. URL Entropy
+10. Path Length
+
+---
+
+## 🐳 Running with Docker
+
+Build image:
+
+```bash
+docker build -t phishing-detector .
+```
+
+Run container:
+
+```bash
+docker run -p 5000:5000 phishing-detector
+```
+
+---
+
+## 💻 Local Installation
+
+Clone repository:
+
+```bash
+git clone https://github.com/yourusername/phishing-url-detection.git
+```
+
+Move into project:
+
+```bash
+cd phishing-url-detection
+```
+
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
-
-### Training the Model
-
-You can train the model using either:
-
-#### Option 1: Jupyter Notebook (Recommended for Interactive Training)
-
-The Jupyter notebook provides an interactive environment with better visualization and progress tracking:
-
-```bash
-# Install Jupyter if not already installed
-pip install jupyter matplotlib
-
-# Launch Jupyter Notebook
-jupyter notebook train_model.ipynb
-```
-
-Then run all cells sequentially. The notebook includes:
-
-- Step-by-step training process
-- Model comparison tables
-- Feature importance visualization
-- Interactive progress tracking
-
-#### Option 2: Python Script
-
-To train the model using the Python script:
+Train model:
 
 ```bash
 python train_model.py
 ```
 
-This will:
-
-- Load and combine both datasets
-- Standardize label conventions
-- Train multiple models (Random Forest, Gradient Boosting, AdaBoost, XGBoost)
-- Select the best performing model based on accuracy and F1-score
-- Save the model as `models/phishing_detection_model.pkl` (or set `MODEL_DIR` env var to a custom path)
-
-### Making Predictions
-
-To predict if a URL is phishing:
+Run prediction:
 
 ```bash
-python predict_phishing.py <URL>
+python predict_phishing.py https://example.com
 ```
 
-Examples:
+---
 
-```bash
-python predict_phishing.py https://www.example.com
-python predict_phishing.py google.com
-python predict_phishing.py 192.168.1.1
+## 📂 Project Structure
+
+```text
+Phishing-URL-Detection
+│
+├── screenshots/
+│   ├── banner.png
+│   ├── home.png
+│   ├── analyze.png
+│   ├── legitimate.png
+│   └── phishing.png
+│
+├── models/
+│   ├── phishing_detection_model.pkl
+│   └── model_features.pkl
+│
+├── train_model.py
+├── predict_phishing.py
+├── requirements.txt
+├── model_info.json
+└── README.md
 ```
 
-## Model Files
+---
 
-- `models/phishing_detection_model.pkl` - Trained model (best performing algorithm). Location configurable via `MODEL_DIR` env var.
-- `models/model_features.pkl` - List of feature names used by the model. Location configurable via `MODEL_DIR` env var.
-- `model_info.json` - Model metadata and performance metrics (also saved to `models/model_info.json` when training).
+## 🎯 Future Improvements
 
-## Top Features
+- Deep Learning models
+- Explainable AI (SHAP)
+- Browser Extension
+- REST API Deployment
+- Kubernetes Deployment
+- Threat Intelligence Integration
+- Real-time Monitoring Dashboard
 
-The most important features for detection (by importance):
+---
 
-1. URL Length
-2. Number of Digits in URL
-3. Domain Length
-4. Average Subdomain Length
-5. Number of Subdomains
-6. Number of Special Characters in URL
-7. Entropy of Domain
-8. Number of Slashes in URL
-9. Entropy of URL
-10. Path Length
+## 👨‍💻 Author
 
-## Supported Input Types
+**Dhruv Maheshwari**
 
-The model can analyze:
+B.Tech AWS Student | Cloud Computing | DevOps | Machine Learning | Full Stack Development
 
-- **Full URLs**: `https://www.example.com/path?query=test`
-- **Domains**: `example.com` or `www.example.com`
-- **IP Addresses**: `192.168.1.1` or `http://8.8.8.8`
+GitHub: https://github.com/dhxruv999
 
-**Note**: IP addresses are often flagged as suspicious because they're commonly used in phishing attacks. This is expected behavior for security purposes.
+---
 
-## Model Comparison
+## ⭐ Support
 
-The training script tests multiple algorithms:
-
-| Model             | Accuracy       | ROC-AUC | F1-Score |
-| ----------------- | -------------- | ------- | -------- |
-| Gradient Boosting | 94.97%         | 97.73%  | 94.32%   |
-| Random Forest     | 91.70%         | 97.04%  | 90.29%   |
-| AdaBoost          | 74.25%         | 80.19%  | 63.96%   |
-| XGBoost           | (if available) |         |          |
-
-The best model is automatically selected and saved.
-
-## Notes
-
-- The model uses only URL-based features (no HTML content required)
-- Both datasets are combined for maximum training data
-- Features are extracted from URL structure, domain characteristics, and entropy
-- For production use, consider adding a whitelist for known legitimate IPs if needed
-
-## License
-
-This project uses publicly available datasets for research purposes.
+If you found this project useful, consider giving it a star ⭐ on GitHub.
