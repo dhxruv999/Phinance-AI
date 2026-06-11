@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ Phishing URL Detection System
+#  Phishing URL Detection System
 
 <img src="screenshots/banner.png" alt="Project Banner" width="100%">
 
